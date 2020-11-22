@@ -1,12 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import LayoutContainer from './components/layout/layoutContainer';
+import './styles.css';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      
+    <div>
+      <LayoutContainer />
     </div>
   );
-}
+};
 
 export default App;
