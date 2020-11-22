@@ -16,8 +16,8 @@ describe("Button component test", () => {
 
   it("should render a button", () => {
     const component = shallow(<Button {...props} />);
-    console.log(component.debug());
-    const button = component.find('[data-testid="button"]').text();
-    expect(button).toBe("2010");
+    const button = component.find('[data-testid="button"]');
+    button.simulate("click");
+    expect(button.text()).toBe("2010");
   });
 });
