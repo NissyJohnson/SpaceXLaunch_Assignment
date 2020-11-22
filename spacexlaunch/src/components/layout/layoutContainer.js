@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import LoadingIndicator from '../LoadingIndicator/loadingIndicator';
-import Header from '../header/header';
-import Footer from '../footer/footer';
-import Filter from '../filter/filter';
-import Cards from '../cards/cards';
-import { launchYear } from '../../redux/actions/actions';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import LoadingIndicator from "../loadingIndicator/loadingIndicator";
+import Header from "../header/header";
+import Footer from "../footer/footer";
+import Filter from "../filter/filter";
+import Cards from "../cards/cards";
+import { launchYear } from "../../redux/actions/actions";
 
-const LayoutContainer = ({ loading, launchYears, launchedYear, cardDetails }) => {
+const LayoutContainer = ({
+  loading,
+  launchYears,
+  launchedYear,
+  cardDetails,
+}) => {
   useEffect(() => {
     launchedYear();
-  }, []);
+  }, [launchedYear]);
 
   return loading ? (
     <LoadingIndicator loading />

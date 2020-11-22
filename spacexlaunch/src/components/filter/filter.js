@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/require-default-props */
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import Button from '../button/button';
-import { launchLandSuccess, launchyearSuccess } from '../../redux/actions/actions';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Button from "../button/button";
+import {
+  launchLandSuccess,
+  launchyearSuccess,
+} from "../../redux/actions/actions";
 
 const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
   const [inputs, setInputs] = useState({
@@ -20,24 +23,24 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
       if (touched) {
         if (year === null && (launch || land)) {
           if (launch && land) {
-            launchLandsuccess('landSuccess');
+            launchLandsuccess("landSuccess");
           } else if (launch && !land) {
-            launchLandsuccess('launchfail');
+            launchLandsuccess("launchfail");
           } else if (launch) {
-            launchLandsuccess('launchSuccess');
+            launchLandsuccess("launchSuccess");
           }
         } else if (year !== null && (launch || land)) {
           if (launch && land) {
-            launchYearSuccess('landSuccess', year);
+            launchYearSuccess("landSuccess", year);
           } else if (launch && !land) {
-            launchYearSuccess('launchfail', year);
+            launchYearSuccess("launchfail", year);
           } else if (launch) {
-            launchYearSuccess('launchSuccess', year);
+            launchYearSuccess("launchSuccess", year);
           }
         }
       }
     } catch (e) {
-      throw new Error('Error in the API call');
+      throw new Error("Error in the API call");
     }
   }, [year, land, launch, touched]);
 
@@ -45,15 +48,15 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
     const { name, value } = e.target;
     let inputValue;
     const activebtns = document.querySelectorAll(`[name='${name}'].active`);
-    activebtns.forEach((btn) => btn.classList.remove('active'));
-    e.currentTarget.className += ' active';
+    activebtns.forEach((btn) => btn.classList.remove("active"));
+    e.currentTarget.className += " active";
     if (isNaN(value)) {
-      inputValue = value === 'True';
+      inputValue = value === "True";
     } else inputValue = parseInt(value, 10);
     setInputs({ ...inputs, [name]: inputValue, touched: true });
   };
 
-  const bool = ['True', 'False'];
+  const bool = ["True", "False"];
 
   const buttons = (param, obj) => {
     return (
@@ -66,6 +69,7 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
           click={onclick}
           name={param}
           key={k}
+          data-testid="button"
         />
       ))
     );
@@ -77,17 +81,17 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
       <div className="title">
         <p className="header-title">Launch Year</p>
         <hr aria-hidden="true" />
-        {buttons('year', launchYears)}
+        {buttons("year", launchYears)}
       </div>
       <div className="launch">
         <p className="header-title">Successful Launch</p>
         <hr aria-hidden="true" />
-        {buttons('launch', bool)}
+        {buttons("launch", bool)}
       </div>
       <div className="land">
         <p className="header-title">Successful Landing</p>
         <hr aria-hidden="true" />
-        {buttons('land', bool)}
+        {buttons("land", bool)}
       </div>
     </div>
   );
