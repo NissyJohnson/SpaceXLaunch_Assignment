@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Header = props => {
+const Header = ({ heading }) => {
   return (
     <>
-      <header data-testid="header">Header</header>
+      <header data-testid="header">{heading}</header>
     </>
   );
 };

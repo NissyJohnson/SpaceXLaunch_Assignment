@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Footer = props => {
+const Footer = ({ footer }) => {
   return (
     <>
-      <footer data-testid="footer">Footer</footer>
+      <footer data-testid="footer">{footer}</footer>
     </>
   );
 };
