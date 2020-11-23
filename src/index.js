@@ -1,18 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { composeWithDevTools } from "redux-devtools-extension";
 import Reducer from "./redux/reducers/reducer";
 import "./index.css";
 import App from "./App";
 
-const store = createStore(
-  Reducer,
-  compose(applyMiddleware(thunk), composeWithDevTools())
-);
+const store = createStore(Reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
