@@ -8,16 +8,24 @@ import {
   launchLandSuccess,
   launchyearSuccess,
 } from "../../redux/actions/actions";
+import { launchYear } from "../../redux/actions/actions";
 
-const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
-  const [inputs, setInputs] = useState({
+const Filter = ({
+  launchYears,
+  launchLandsuccess,
+  launchYearSuccess,
+  launchedYear,
+}) => {
+  const stateInputs = {
     year: null,
     land: false,
     launch: false,
     touched: false,
-  });
+    reset: false,
+  };
+  const [inputs, setInputs] = useState(stateInputs);
 
-  const { year, land, launch, touched } = inputs;
+  const { year, land, launch, touched, reset } = inputs;
   useEffect(() => {
     try {
       if (touched) {
@@ -42,10 +50,17 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
     } catch (e) {
       throw new Error("Error in the API call");
     }
-  }, [year, land, launch, touched]);
+  }, [year, land, launch, touched, reset]);
 
   const onclick = (e) => {
     const { name, value } = e.target;
+    if (value === "Reset") {
+      setInputs(stateInputs);
+      const activebtns = document.querySelectorAll(`button.active`);
+      activebtns.forEach((btn) => btn.classList.remove("active"));
+      launchedYear();
+      return;
+    }
     let inputValue;
     const activebtns = document.querySelectorAll(`[name='${name}'].active`);
     activebtns.forEach((btn) => btn.classList.remove("active"));
@@ -57,11 +72,12 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
   };
 
   const bool = ["True", "False"];
+  const resetVal = ["Reset"];
 
-  const buttons = (param, obj) => {
+  const buttons = (param, arr) => {
     return (
-      obj &&
-      Array.prototype.map.call(obj, (item, k) => (
+      arr &&
+      Array.prototype.map.call(arr, (item, k) => (
         <Button
           classes="btn btn-primary btn-custom"
           id={`${param}${k}`}
@@ -93,6 +109,7 @@ const Filter = ({ launchYears, launchLandsuccess, launchYearSuccess }) => {
         <hr aria-hidden="true" />
         {buttons("land", bool)}
       </div>
+      <div className="reset">{buttons("reset", resetVal)}</div>
     </div>
   );
 };
@@ -101,11 +118,13 @@ Filter.propTypes = {
   launchYears: PropTypes.node,
   launchLandsuccess: PropTypes.func,
   launchYearSuccess: PropTypes.func,
+  launchedYear: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   launchLandsuccess: (type) => dispatch(launchLandSuccess(type)),
   launchYearSuccess: (type, year) => dispatch(launchyearSuccess(type, year)),
+  launchedYear: () => dispatch(launchYear()),
 });
 
 export default connect(null, mapDispatchToProps)(Filter);

@@ -19,6 +19,15 @@ header {
   min-width: 255px;
 }
 
+.filters h2 {
+  margin-top: 0px;
+}
+
+.reset {
+  text-align: center;
+  padding: 1em;
+}
+
 .card-contentainer.layout-columns__column.m-card {
   background-color: #fff;
   border-radius: 10px;

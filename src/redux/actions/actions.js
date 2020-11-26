@@ -20,7 +20,6 @@ export const cardDetail = (item) => {
 };
 export const launchYear = () => async (dispatch) => {
   try {
-    dispatch(loadingIndicator(true));
     const response = await fetch(baseUrl);
     const res = await response.json();
     if (res !== undefined && res !== null) {
