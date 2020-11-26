@@ -122,6 +122,13 @@ h3.card-heading {
   padding: 0 1.25em;
 }
 
+@media (max-width: 414px) {
+  .loadingSpinner {
+    top: 30%;
+    left: 20%;
+  }
+}
+
 @media (min-width: 700px) {
   .layout-content-container {
     padding: 0 1.875em;
