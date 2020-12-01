@@ -1,4 +1,4 @@
-import * as types from '../types/types';
+import * as types from "../types/types";
 
 const initialState = {
   loading: true,
@@ -19,6 +19,10 @@ const Reducer = (state = initialState, action) => {
     case types.CARD_DETAILS:
       // eslint-disable-next-line prefer-object-spread
       return { ...state, cardDetails: action.cardDetails };
+
+    case types.ALL_CARD_DETAILS:
+      // eslint-disable-next-line prefer-object-spread
+      return { ...state, allCardDetails: action.cardDetails };
 
     case types.NO_RECORDS:
       // eslint-disable-next-line prefer-object-spread

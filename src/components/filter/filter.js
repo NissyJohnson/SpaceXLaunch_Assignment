@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/require-default-props */
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -8,13 +6,14 @@ import {
   launchLandSuccess,
   launchyearSuccess,
 } from "../../redux/actions/actions";
-import { launchYear } from "../../redux/actions/actions";
+import { launchYear, launchYearSearch } from "../../redux/actions/actions";
 
 const Filter = ({
   launchYears,
   launchLandsuccess,
   launchYearSuccess,
   launchedYear,
+  launchYearOnly,
 }) => {
   const stateInputs = {
     year: null,
@@ -37,13 +36,19 @@ const Filter = ({
           } else if (launch) {
             launchLandsuccess("launchSuccess");
           }
-        } else if (year !== null && (launch || land)) {
-          if (launch && land) {
+        } else if (year !== null) {
+          const activebtns = document.querySelectorAll(
+            "[name='land'].active,[name='launch'].active"
+          );
+          activebtns.forEach((btn) => btn.classList.remove("active"));
+          if (!launch && !land) {
+            launchYearOnly(year);
+          } else if (launch && land) {
             launchYearSuccess("landSuccess", year);
-          } else if (launch && !land) {
-            launchYearSuccess("launchfail", year);
           } else if (launch) {
             launchYearSuccess("launchSuccess", year);
+          } else if (launch && !land) {
+            launchYearSuccess("launchfail", year);
           }
         }
       }
@@ -119,12 +124,14 @@ Filter.propTypes = {
   launchLandsuccess: PropTypes.func,
   launchYearSuccess: PropTypes.func,
   launchedYear: PropTypes.func,
+  launchYearOnly: PropTypes.func,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   launchLandsuccess: (type) => dispatch(launchLandSuccess(type)),
   launchYearSuccess: (type, year) => dispatch(launchyearSuccess(type, year)),
   launchedYear: () => dispatch(launchYear()),
+  launchYearOnly: (year) => dispatch(launchYearSearch(year, dispatch)),
 });
 
 export default connect(null, mapDispatchToProps)(Filter);

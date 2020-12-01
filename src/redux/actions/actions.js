@@ -18,6 +18,14 @@ export const cardDetail = (item) => {
     image: item.links.mission_patch_small,
   };
 };
+
+export const launchYearSearch = (year) => async (dispatch, getState) => {
+  const state = await getState();
+  const cardDetails = state.allCardDetails.filter(
+    (item) => item.launchYear == year
+  );
+  dispatch({ type: types.CARD_DETAILS, cardDetails });
+};
 export const launchYear = () => async (dispatch) => {
   try {
     const response = await fetch(baseUrl);
@@ -29,6 +37,7 @@ export const launchYear = () => async (dispatch) => {
         res && Array.prototype.map.call(res, (item) => cardDetail(item));
       const launchYears = Array.from(new Set(years));
       dispatch({ type: types.LAUNCH_YEARS, launchYears });
+      dispatch({ type: types.ALL_CARD_DETAILS, cardDetails });
       dispatch({ type: types.CARD_DETAILS, cardDetails });
       dispatch(loadingIndicator(false));
     }
