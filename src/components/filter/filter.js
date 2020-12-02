@@ -23,6 +23,7 @@ const Filter = ({
     reset: false,
   };
   const [inputs, setInputs] = useState(stateInputs);
+  const [yearFilter, setYearFilter] = useState(null);
 
   const { year, land, launch, touched, reset } = inputs;
   useEffect(() => {
@@ -37,10 +38,16 @@ const Filter = ({
             launchLandsuccess("launchSuccess");
           }
         } else if (year !== null) {
-          const activebtns = document.querySelectorAll(
-            "[name='land'].active,[name='launch'].active"
-          );
-          activebtns.forEach((btn) => btn.classList.remove("active"));
+          if (year !== yearFilter) {
+            const activebtns = document.querySelectorAll(
+              "[name='land'].active,[name='launch'].active"
+            );
+            activebtns.forEach((btn) => btn.classList.remove("active"));
+            setInputs((prevState) => {
+              return { ...prevState, land: false, launch: false };
+            });
+            setYearFilter(year);
+          }
           if (!launch && !land) {
             launchYearOnly(year);
           } else if (launch && land) {
